@@ -18,20 +18,25 @@ function startGame() {
   // this is the function of Create the game board with the specified grid size
 function createBoard(size) {
     const gameBoard = document.getElementById('game-board');
+       // Clear any existing content in the game board
     gameBoard.innerHTML = '';
+        // Set the grid template columns and rows based on the specified size
     gameBoard.style.gridTemplateColumns = `repeat(${size}, 50px)`;
     gameBoard.style.gridTemplateRows = `repeat(${size}, 50px)`;
 
+        // Create cells for the game board
     for (let i = 0; i < size * size; i++) {
         const cell = document.createElement('div');
+                // Add the 'cell' class to each cell
         cell.classList.add('cell');
+           // Add an event listener to handle clicks on each cell
         cell.addEventListener('click', handleCellClick);
         gameBoard.appendChild(cell);
     }
 }
 
 let board, currentPlayer, gameActive, winStreak;
-
+// Create a 2D array representing the game board, initially filled with null
 function initializeGame(size, streak) {
     board = Array(size).fill(null).map(() => Array(size).fill(null));
     currentPlayer = 'X';
@@ -48,6 +53,7 @@ function handleCellClick(event) {
 
     if (board[row][col] !== null) return;
 
+     // If the cell is already occupied, do nothing
     board[row][col] = currentPlayer;
     cell.textContent = currentPlayer;
 
@@ -64,6 +70,7 @@ function handleCellClick(event) {
 }
 
 function checkWin(row, col) {
+     // Check for a win in all possible directions
     return checkDirection(row, col, 1, 0) || // Horizontal
            checkDirection(row, col, 0, 1) || // Vertical
            checkDirection(row, col, 1, 1) || // Diagonal \
